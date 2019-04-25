@@ -8,30 +8,30 @@ import java.util.List;
 
 public class View {
     private Color[][] board;
-    private JOptionPane sizeOptionPane;
+    private JComboBox<String> sizeOptionPane;
     private JFrame mainFrame;
     private JFrame principleFrame;
     private JButton startButton;
     private int size;
     private List<Canvas> canvasList = new ArrayList<>();
 
-    public View(ActionListener al, int size, Color[][] board) {
-        this.size = size;
-        this.board = board;
+    public View(ActionListener al) {
         init(al);
     }
 
     private void init(ActionListener al) {
         // Components
-        sizeOptionPane = new JOptionPane("Sizes");
+        sizeOptionPane = new JComboBox<>();
         String[] options = {"2","4","8","16","32","64"};
-        sizeOptionPane.setOptions(options);
+        for (int i = 0; i < options.length; i++) {
+            sizeOptionPane.addItem(options[i]);
+        }
         startButton = new JButton("start");
         startButton.addActionListener(al);
 
         // Frame
         principleFrame = new JFrame("Menu");
-        principleFrame.setSize(new Dimension(300, 200));
+        principleFrame.setSize(new Dimension(200, 100));
         principleFrame.setLayout(new FlowLayout());
         principleFrame.add(startButton);
         principleFrame.add(sizeOptionPane);
@@ -39,12 +39,13 @@ public class View {
         principleFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-    public void render() {
+    public void render(int size, Color[][] board) {
+        this.board = board;
+        this.size = size;
         mainFrame = new JFrame("Tromino Tiler");
-        mainFrame.setSize(new Dimension(size * 50, size * 50));
+        mainFrame.setSize(new Dimension(size * 25, size * 25));
         mainFrame.setLayout(new GridLayout(size, size));
         mainFrame.setVisible(true);
-        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         for(int i = 0; i < size; i++) {
             for(int j = 0; j < size; j++) {
@@ -94,6 +95,10 @@ public class View {
 
     public JButton getStartButton() {
         return startButton;
+    }
+
+    public JComboBox<String> getSizeOptionPane() {
+        return sizeOptionPane;
     }
 
 }

@@ -11,14 +11,14 @@ public class Controller {
     private TrominoBoard trominoBoard;
     // Instantiate view by passing action listener to listen for button presses
     public Controller() {
-        this.trominoBoard = new TrominoBoard(16, new Point(4, 6));
         this.view = new View(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == view.getStartButton()) {
-                    view.render();
+                    trominoBoard = new TrominoBoard(Integer.parseInt(view.getSizeOptionPane().getSelectedItem().toString()), new Point(5, 5));
+                    view.render(trominoBoard.getSize(), trominoBoard.getBoard());
                 }
             }
-        }, trominoBoard.getSize(), trominoBoard.getBoard());
+        });
     }
 }
